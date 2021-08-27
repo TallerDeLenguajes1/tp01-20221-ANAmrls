@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center" style="margin-top: 1.5rem;">
+    <h2>Problema 01</h2>
+    <form asp-action="Problema01" asp-controller="Home" method="post">
+        <h3>Calcular el cuadrado de un entero</h3>
+        <label for="numero">Ingrese un número entero</label>
+        <input id="numero" type="text" name="numero" />
+        <input id="Submit" type="submit" value="Calcular" />
+    </form>
+</div>
+<div class="text-center"  style="margin-top: 1.5rem;">
+    <h2>Problema 02</h2>
+    <form asp-action="Problema02" asp-controller="Home" method="post">
+        <h3>División entre dos números</h3>
+        <label for="dividendo">Ingrese dos números</label>
+        <input id="dividendo" type="text" name="dividendo" />
+        <label for="divisor">/</label>
+        <input id="divisor" type="text" name="divisor" />
+        <input id="Submit" type="submit" value="Calcular" />
+    </form>
+</div>
+<div class="text-center" style="margin-top: 1.5rem;">
+    <h2>Problema 03</h2>
+    <form asp-action="Problema03" asp-controller="Home" method="post">
+        <h3>Consumir api</h3>        
+        <input id="Submit" type="submit" value="Mostrar Provincias" />
+    </form>
+</div>
+<div class="text-center" style="margin-top: 1.5rem;">
+<h2>Problema 04</h2>
+<form asp-action="Problema03" asp-controller="Home" method="post">
+    <h3>División entre dos números</h3>
+    <label for="kilometros">Kilómetros conducidos</label>
+    <input id="kilometros" type="text" name="kilometros" />
+    <label for="litros">Litros usados</label>
+    <input id="litros" type="text" name="litros" />
+    <input id="Submit" type="submit" value="Calcular" />
+</form>
+</div>
+
