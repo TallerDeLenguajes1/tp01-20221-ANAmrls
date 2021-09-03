@@ -10,6 +10,7 @@ using System.Net;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using NLog;
 
 namespace TP_Nro1.Controllers
 {
@@ -20,10 +21,12 @@ namespace TP_Nro1.Controllers
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+            _logger.LogDebug(1, "NLog injected into HomeController");
         }
 
         public IActionResult Index()
         {
+            _logger.LogInformation("Hello, this is the index!");
             return View();
         }
 
@@ -34,27 +37,36 @@ namespace TP_Nro1.Controllers
 
         public string Problema01(string numero)
         {
-            string resultado;
-            int test;
+            string mensaje;
+            int resultado;
 
             if (int.TryParse(numero, out int num))
             {
                 try
                 {
-                    test = checked(num * num);
-                    resultado = test.ToString();
+                    resultado = checked(num * num);
+                    mensaje = resultado.ToString();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    resultado = "El resultado esta fuera del rango esperado";
+                    mensaje = "El resultado esta fuera del rango esperado";
+
+                    var mensajeLog = "Error message: " + ex.Message;
+                    if (ex.InnerException != null)
+                    {
+                        mensajeLog = mensajeLog + " Inner exception: " + ex.InnerException.Message;
+                    }
+                    mensajeLog += " Stack Trace: " + ex.StackTrace;
+
+                    _logger.LogError(mensajeLog);
                 }
             }
             else
             {
-                resultado = "El dato ingresado no es un número o esta fuera del rango esperado";
+                mensaje = "El dato ingresado no es un número o esta fuera del rango esperado";
             }         
 
-            return resultado;
+            return mensaje;
         }
 
         public string Problema02(string dividendo, string divisor)
@@ -94,9 +106,11 @@ namespace TP_Nro1.Controllers
 
                 return listaProvincias;
             }
-            catch (Exception)
-            {
-                return "Ocurrio un error al cargar la lista de provincias";
+            catch (Exception ex)
+            {                
+                _logger.LogError(ex.ToString());
+
+                return "Ocurrio un error al cargar la lista de provincias";                
             }
             
         }
@@ -162,13 +176,15 @@ namespace TP_Nro1.Controllers
                     mensaje = "Ingrese los datos antes de calcular";
                 }
             }
-            catch (FormatException)
+            catch (FormatException ex)
             {
                 mensaje = "Los datos ingresados no son numeros o no están en el formato correcto";
+                _logger.LogError(ex.ToString());
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 mensaje = "Valores ingresados fuera de los rangos esperados";
+                _logger.LogError(ex.ToString());
             }
 
             return mensaje;
